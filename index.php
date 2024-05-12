@@ -12,8 +12,6 @@
     <body>
         <?php
             include_once 'Controller/navegacao.php';
-
-            // include_once 'navegacao.php';
         ?>
     </body>
 </html>

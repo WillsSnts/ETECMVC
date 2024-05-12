@@ -23,20 +23,18 @@
         }
 
         // função que vai atualizar as informaçoes do cadastro
-        public function atualizar($nome, $cpf, $dataNascimento, $email, $id){
-
+        public function atualizar($id, $nome, $cpf, $email, $dataNascimento) {
             require_once 'Model/Usuario.php';
             $usuario = new Usuario();
-            $usuario->setNome($nome);
-            $usuario->setCpf($cpf);
-            $usuario->setDataNascimento($dataNascimento);
-            $usuario->setEmail($email);
             $usuario->setId($id);
-            
+            $usuario->setNome($nome);
+            $usuario->setCPF($cpf);
+            $usuario->setEmail($email);
+            $usuario->setDataNascimento($dataNascimento);
             $r = $usuario->atualizarBD();
-            $_SESSION['usuario'] = serialize($usuario);
+            $_SESSION['Usuario'] = serialize($usuario);
             return $r;
-        }
+       }
 
         // função que vai fazer o login
         public function login($cpf, $senha)
@@ -54,6 +52,14 @@
             {
                 return false;
             }
+
+        }
+
+        public function gerarLista()
+        {
+            require_once 'Model/Usuario.php';
+            $usuarios = new Usuario();
+            return $results = $usuarios->listaUsers();
 
         }
     }

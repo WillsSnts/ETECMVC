@@ -116,7 +116,7 @@
                 $this-> nome = $r-> nome;
                 $this-> email = $r-> email;
                 $this-> cpf = $r-> cpf;
-                $this-> dataNascimento = $r-> dataNascimento;
+                $this-> dataNascimento = $r-> datanascimento;
                 $this-> senha = $r-> senha;
                 $conn->close();
                 return true;
@@ -127,6 +127,23 @@
                 return false;
             }
         }
+    
+    //------Info User
+    public function userInfo($cpf)
+    {
+        require_once 'ConexaoBD.php';
+        $con = new ConexaoBD();
+        $conn = $con->conectar();
+
+        if($conn->connect_error)
+        {
+            die("Connection failed: ".$conn->connect_error);
+        }
+
+        $sql = "SELECT * FROM usuario WHERE cpf = ".$cpf;
+        $re = $conn->query($sql);
+        return $re;
+    }
 
     //-------MetodoAtualizar
         public function atualizarBD()
@@ -140,12 +157,12 @@
                 die("Connection failed: ".$conn->connect_error);
             }
 
-            $sql = "UPDATE usuario 
-            SET nome = '".$this->nome.
-            "', cpf = '".$this->cpf.
-            "', datanascimento = '".$this->dataNascimento.
-            "', email = '".$this->email.
-            "' WHERE idusuario = '".$this->id."'";
+            $sql = "UPDATE usuario SET 
+            nome='" . $this->nome . 
+            "', cpf='" . $this->cpf . 
+            "', dataNascimento='" . $this->dataNascimento . 
+            "', email='" . $this->email . 
+            "' WHERE idusuario='" . $this->id . "'";
 
             if($conn->query($sql)===TRUE)
             {
@@ -158,8 +175,24 @@
                 return FALSE;
             }
         }
+
+    //-------MetodoListar
+        public function listaUsers(){
+            require_once 'ConexaoBD.php';
+
+            require_once 'ConexaoBD.php';
+            $con = new ConexaoBD();
+            $conn = $con->conectar();
+
+            if($conn->connect_error)
+            {
+                die("Connection failed: ".$conn->connect_error);
+            }
+
+            $sql = "SELECT * FROM usuario";
+            $re = $conn->query($sql);
+            return $re;
+        }
     }
-
-
 ?>
 <!-- essa classe irá  cuidar das informaçoes de login do usuario  -->

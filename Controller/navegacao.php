@@ -259,11 +259,12 @@
     include_once 'Model/Experiencia.php';
     include_once 'Model/Formacao.php';
     include_once 'Model/OutrasForms.php';
+    include_once 'Model/Administrador.php';
     include_once 'Controller/usuarioController.php';
     include_once 'Controller/formacaoController.php';
     include_once 'Controller/experienciaController.php';
     include_once 'Controller/outrasExpController.php';
-
+    include_once 'Controller/admController.php';
 
     if(!isset($_SESSION))
     {
@@ -272,6 +273,7 @@
 
     switch($_POST){
 
+//------Pagina inicial (login)
         // caso nulo mostrar tela de login
         case isset($_POST[null]):
             include_once 'View/login.php'; 
@@ -283,7 +285,24 @@
             include_once 'View/primeiroAcesso.php';
 
             break;
+        
+        // Login
+        case isset($_POST['btnLogin']):
+            require_once 'Controller/usuarioController.php';
 
+            $uController = new UsuarioController();
+
+            if($uController->login($_POST['txtLogin'], $_POST['txtSenha'])){
+                include_once 'View/principal.php';
+            }
+            else
+            {
+                include_once 'View/cadastroNaoRealizado.php';
+            }
+
+            break;
+
+//------Pagina de cadastro
         // Cadastro
         case isset($_POST['btnCadastrar']):
             require_once 'Controller/usuarioController.php';
@@ -304,6 +323,17 @@
             }
             break;
 
+        // cad não realizado
+        case isset($_POST['btnCadNaoRealizado']):
+            include_once 'View/login.php';
+            break;
+
+        // cad realizado
+        case isset($_POST['btnCadRealizado']):
+            include_once 'View/login.php';
+            break;
+
+//------Pagina principal
         // Atualizar
         case isset($_POST['btnAtualizar']):
 
@@ -312,11 +342,12 @@
             $uController = new UsuarioController();
             
             if($uController->atualizar(
-                $_POST['txtNome'],
-                $_POST['txtCPF'],
-                date('Y-m-d', strtotime(str_replace('/', '-',$_POST['txtData']))),
-                $_POST['txtEmail'],
-                $_POST['txtID']))
+                
+                $_POST["txtID"],
+                $_POST["txtNome"],
+                $_POST["txtCPF"],
+                $_POST["txtEmail"],
+                date('Y-m-d', strtotime(str_replace('/', '-',$_POST['txtData'])))))
             {
                 include_once 'View/atualizacaoRealizada.php';
             }
@@ -327,15 +358,10 @@
 
             break;
 
-        // cad realizado
-        case isset($_POST['btnCadRealizado']):
-            include_once 'View/login.php';
-            break;
         
-        // cad não realizado
-        case isset($_POST['btnCadNaoRealizado']):
-            include_once 'View/login.php';
-            break;
+       
+        
+        
 
         // att realizado
          case isset($_POST['btnAtualizacaoCadastro']):
@@ -347,21 +373,6 @@
             include_once 'View/principal.php';
             break;
             
-        // Login
-        case isset($_POST['btnLogin']):
-            require_once 'Controller/usuarioController.php';
-
-            $uController = new UsuarioController();
-
-            if($uController->login($_POST['txtLogin'], $_POST['txtSenha'])){
-                include_once 'View/principal.php';
-            }
-            else
-            {
-                include_once 'View/cadastroNaoRealizado.php';
-            }
-            break;
-        
         // Add Formação
         case isset($_POST['btnAddFormacao']):
 
@@ -376,11 +387,12 @@
                 $_POST['txtDescFA'],
                 unserialize($_SESSION['Usuario'])->getID()) != false)
             {
-                include_once 'View/informacaoExcluida.php';
+                // include_once 'View/informacaoExcluida.php';
+                include_once 'View/cadastroRealizado.php';
             }
             else
             {
-                include_once 'View/operacaoNaoRealizada.php';
+                include_once 'View/cadastroNaoRealizado.php';
             }
             break;
         
@@ -506,7 +518,65 @@
         case isset($_POST['btnInfExcluir']):
             include_once 'View/principal.php';
             break;
-            
+        
+//------Pagina dos Administradores
+        // Login de Adm
+        case isset($_POST['btnADM']):
+            include_once 'View/admLogin.php';
+            break;
+        
+        // lista de usuarios
+        case isset($_POST['btnListCad']):
+            include_once 'View/admListCad.php';
+            break;
+
+        // voltar
+        case isset($_POST['btnVoltar']):
+            include_once 'View/admPrincipal.php';
+            break;
+        
+        // Login
+        case isset($_POST['btnLoginAdm']):
+            require_once 'Controller/admController.php';
+
+            $admController = new AdmController();
+
+            if($admController->login($_POST['txtLoginAdm'], $_POST['txtSenhaAdm'])){
+
+                include_once 'View/admPrincipal.php';
+            }
+            else
+            {
+                include_once 'View/cadAdmNaoRealizado.php';
+            }
+
+            break;
+
+        // Cadastro nao realizado
+        case isset($_POST['btnCadAdmNaoRealizado']):
+            include_once 'View/admLogin.php';
+            break;
+
+        // Ver perfis
+        case isset($_POST['btnPerfil']):
+            include_once 'View/admView.php';
+            break;
+        
+        // Voltar lista
+        case isset($_POST['btnVoltarList']):
+            include_once 'View/admListCad.php';
+            break;
+        
+        // Ver lista Adm
+        case isset($_POST['btnListAdmCad']):
+            include_once 'View/admList.php';
+            break;
+
+        case isset($_POST['btnSair']):
+            unset( $_SESSION['Usuario']);
+        
+            include_once 'View/login.php';
+            break;
     }
 ?>
 

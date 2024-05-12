@@ -43,7 +43,7 @@
 
         <a href="#home" class="w3-bar-item w3-button w3-block w3-cell w3-hover-light-grey w3-hover-text-cyan w3-text-light-grey">
 
-            <i class="fa-solid fa-house w3-xxlarge"></i>
+            <i class="fa-solid fa-house w3-large"></i>
 
             <p>HOME</p>
 
@@ -51,7 +51,7 @@
     
         <a href="#dPessoais" class="w3-bar-item w3-button w3-block w3-cell w3-hover-light-grey w3-hover-text-cyan w3-text-light-grey">
 
-            <i class="fa-solid fa-address-book w3-xxlarge"></i>
+            <i class="fa-solid fa-address-book w3-large"></i>
             
             <p>Dados Pessoais</p>
             
@@ -59,7 +59,7 @@
 
         <a href="#formacao" class="w3-bar-item w3-button w3-block w3-cell w3-hover-light-grey w3-hover-text-cyan w3-text-light-grey">
 
-            <i class="fa-solid fa-graduation-cap w3-xxlarge"></i>
+            <i class="fa-solid fa-graduation-cap w3-large"></i>
 
             <p>Formação</p>
             
@@ -67,7 +67,7 @@
 
         <a href="#epProfissional" class="w3-bar-item w3-button w3-block w3-cell w3-hover-light-grey w3-hover-text-cyan w3-text-light-grey">
 
-            <i class="fa-solid fa-briefcase w3-xxlarge"></i>
+            <i class="fa-solid fa-briefcase w3-large"></i>
 
             <p>Experiência Profissional</p>
 
@@ -75,11 +75,17 @@
 
         <a href="#otFormacoes" class="w3-bar-item w3-button w3-block w3-cell w3-hover-light-grey w3-hover-text-cyan w3-text-light-grey">
 
-            <i class="fa-solid fa-graduation-cap w3-xxlarge"></i>
+            <i class="fa-solid fa-graduation-cap w3-large"></i>
 
             <p>Outras Formações</p>
             
         </a>
+        <form action="index.php">
+            <button class="w3-bar-item w3-button w3-block w3-cell w3-hover-light-grey w3-hover-text-cyan w3-text-light-grey" name="btnSair">
+            <i class="w3-large fa-solid fa-right-from-bracket"></i><br><br>
+                Sair
+            </button>
+        </form>
         
     </nav>
 
@@ -114,18 +120,19 @@
 
             <h2 class="w3-text-cyan">Dados Pessoais</h2>
             <?php
-                 $id  = unserialize($_SESSION['Usuario'])->getID();
-                 '<br>';
-                 $nome  = unserialize($_SESSION['Usuario'])->getNome();
-                 '<br>';
-                 $cpf = unserialize($_SESSION['Usuario'])->getCPF();
-                 '<br> data serializada: ';
-                 $data = unserialize($_SESSION['Usuario'])->getDataNascimento();
-                 '<br> data formatada: ';
-                 $data_formatada = ($data !== null) ? date('Y-m-d', strtotime(str_replace('-', '/', $data))) : '1999-01-01';
-                 '<br>';
-                 $email = unserialize($_SESSION['Usuario'])->getEmail();
-                 '<br>Serializado: <br>';
+                
+                $id  = unserialize($_SESSION['Usuario'])->getID();
+                '<br>';
+                $nome  = unserialize($_SESSION['Usuario'])->getNome();
+                '<br>';
+                $cpf = unserialize($_SESSION['Usuario'])->getCPF();
+                '<br> data serializada: ';
+                $data = unserialize($_SESSION['Usuario'])->getDataNascimento();
+                '<br> data formatada: ';
+                $data_formatada = ($data !== null) ? date('Y-m-d', strtotime(str_replace('-', '/', $data))) : '1999-01-01';
+                '<br>';
+                $email = unserialize($_SESSION['Usuario'])->getEmail();
+                '<br>Serializado: <br>';
                 // var_dump(unserialize($_SESSION['Usuario']));
             ?>
 
